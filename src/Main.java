@@ -7,6 +7,7 @@ public class Main {
 		
 		ReadText r2 = new ReadText();
 		//r2.genText();
-		r2.filter();
+		//r2.filter();
+		r2.genTurText();
 	}
 }

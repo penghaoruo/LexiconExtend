@@ -4,10 +4,44 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class ReadText {
-	String path = ""; // "/shared/corpora/corporaWeb/lorelei/";
-	String dir = path + "hausa/data/monolingual_text/zipped/conll";
+	//String path = ""; // "/shared/corpora/corporaWeb/lorelei/";
+	//String dir = path + "hausa/data/monolingual_text/zipped/conll";
+	String dir = "/shared/preprocessed/resources/turkish/ltf-1";
 	
-	public void genText() throws Exception {
+	public void genTurText() throws Exception {
+		BufferedWriter bw = IOManager.openWriter("data-add-1.tu");
+		ArrayList<String> words = IOManager.readLines("lexicon.tu");
+		
+		File f = new File(dir);
+		File[] files = f.listFiles();
+		int size = 0;
+		int index = 0;
+		for (File file : files) {
+			index++;
+			ArrayList<String> lines = IOManager.readLines(file.getAbsolutePath());
+			for (String line : lines) {
+				if (line.startsWith("<TOKEN")) {
+					int p = line.indexOf('>');
+					int q = line.indexOf("</TOKEN>", p);
+					if (p < q) {
+						String str = line.substring(p+1, q).toLowerCase();
+						if (words.contains(str)) {
+							bw.write(str + " ");
+							size += 1;
+						}
+					}
+				}
+			}
+			if (index % 100 == 0) {
+				System.out.print(index + " ");
+			}
+			bw.write("\n");
+		}
+		bw.close();
+		System.out.println("Token Size:" + size);
+	}
+	
+	public void genHaText() throws Exception {
 		BufferedWriter bw = IOManager.openWriter("data.ha");
 		
 		File f = new File(dir);
@@ -35,13 +69,13 @@ public class ReadText {
 	}
 	
 	public void filter() throws Exception {
-		BufferedWriter bw = IOManager.openWriter("data-filtered.ha");
+		BufferedWriter bw = IOManager.openWriter("data.tu");
 		
-		ArrayList<String> lines = IOManager.readLines("data.ha");
-		ArrayList<String> words = IOManager.readLines("lexicon-filtered.ha");
+		ArrayList<String> lines = IOManager.readLines("wikicomp-2014_tr.txt");
+		ArrayList<String> words = IOManager.readLines("lexicon.tu");
 		int size = 0;
 		for (String line : lines) {
-			String[] strs = line.split(" ");
+			String[] strs = line.toLowerCase().split(" ");
 			boolean flag = false;
 			for (String token : strs) {
 				if (words.contains(token)) {

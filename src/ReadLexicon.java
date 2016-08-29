@@ -6,8 +6,8 @@ import java.util.Map;
 
 public class ReadLexicon {
 	
-	String path = ""; // "/shared/corpora/corporaWeb/lorelei/";
-	String file = path + "hausa/data/lexicon/hau_wordform_morph_analysis.tab";
+	String path = "/shared/corpora/corporaWeb/lorelei/";
+	String file = path + "turkish/data/lexicon/tur_wordform_morph_analysis.tab";
 	public Map<String, String> lex = new HashMap<String, String>();
 
 	public void read() throws IOException {
@@ -16,9 +16,9 @@ public class ReadLexicon {
 			String[] strs = line.split("\t");
 			String word = strs[0].toLowerCase();
 			String pos = strs[1].toLowerCase();
-			if (!checkString(word)) {
-				continue;
-			}
+			//if (!checkString(word)) {
+			//	continue;
+			//}
 			if (!lex.keySet().contains(word)) {
 				lex.put(word, pos);
 			}
@@ -33,7 +33,7 @@ public class ReadLexicon {
 		int count_noun = 0;
 		int count_none = 0;
 		
-		BufferedWriter bw = IOManager.openWriter("lexicon.ha");
+		BufferedWriter bw = IOManager.openWriter("lexicon.tu");
 		for (String w : lex.keySet()) {
 			if (lex.get(w).equals("noun")) {
 				count_noun += 1;
