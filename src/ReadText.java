@@ -6,10 +6,10 @@ import java.util.ArrayList;
 public class ReadText {
 	//String path = ""; // "/shared/corpora/corporaWeb/lorelei/";
 	//String dir = path + "hausa/data/monolingual_text/zipped/conll";
-	String dir = "/shared/preprocessed/resources/turkish/ltf-1";
+	String dir = "/shared/preprocessed/resources/turkish/ltf-16";
 	
 	public void genTurText() throws Exception {
-		BufferedWriter bw = IOManager.openWriter("data-add-1.tu");
+		BufferedWriter bw = IOManager.openWriter("data-add-16.tu");
 		ArrayList<String> words = IOManager.readLines("lexicon.tu");
 		
 		File f = new File(dir);
